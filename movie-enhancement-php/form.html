@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Vídeo</title>
+    <style>
+        /* Estilos para a barra de progresso */
+        #progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+        }
+
+        #progress {
+            width: 0%;
+            height: 30px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+
+        #uploadStatus {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Envie um vídeo para processamento</h1>
+    
+    <!-- Formulário de upload -->
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="video">Escolha o vídeo:</label>
+        <input type="file" name="video" id="video" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <!-- Barra de Progresso -->
+    <div id="progress-bar">
+        <div id="progress">0%</div>
+    </div>
+
+    <!-- Status do Upload -->
+    <div id="uploadStatus"></div>
+
+    <script>
+        // Função para gerenciar o envio do vídeo e exibir progresso
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            var uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.innerHTML = '<span style="color: blue;">Enviando o vídeo, por favor, aguarde...</span>';
+
+            // Recupera o arquivo selecionado
+            var videoFile = document.getElementById('video').files[0];
+
+            // Verifica se um arquivo foi selecionado
+            if (!videoFile) {
+                alert("Por favor, selecione um vídeo para upload.");
+                return;
+            }
+
+            // Cria o objeto FormData para enviar o arquivo
+            var formData = new FormData();
+            formData.append('video', videoFile);
+
+            // Configura o AJAX para o upload
+            var xhr = new XMLHttpRequest();
+
+            // Atualiza a barra de progresso conforme o upload acontece
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    var percentComplete = Math.round((e.loaded / e.total) * 100);
+                    var progressBar = document.getElementById('progress');
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.innerHTML = percentComplete + '%';
+                }
+            });
+
+            // Exibe o status do upload quando completar
+            xhr.addEventListener('load', function() {
+                var response = JSON.parse(xhr.responseText);
+                
+                if (xhr.status === 200 && response.status === 'success') {
+                    // Upload concluído com sucesso, exibe o link do vídeo processado e o tempo de processamento
+                    uploadStatus.innerHTML = '<span style="color: green;">Upload concluído com sucesso! <a href="' + response.output_video + '" target="_blank">Clique aqui para ver o vídeo processado</a><br>Tempo de processamento: ' + response.processing_time + '</span>';
+                } else {
+                    // Falha no upload
+                    uploadStatus.innerHTML = '<span style="color: red;">Erro no upload. Tente novamente.</span>';
+                }
+            });
+
+            // Configura o destino do upload
+            xhr.open('POST', 'index.php', true);
+            xhr.send(formData); // Envia o arquivo via AJAX
+        });
+    </script>
+</body>
+</html>

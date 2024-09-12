@@ -1,0 +1,6 @@
+# Desabilitar listagem de diretórios
+Options -Indexes
+
+# Permitir arquivos de vídeo
+AddType video/mp4 .mp4
+AddType video/avi .avi

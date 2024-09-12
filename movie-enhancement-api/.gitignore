@@ -1,0 +1,20 @@
+# Ignorar o ambiente virtual
+venv/
+.env/
+
+# Ignorar arquivos de vídeo
+*.mp4
+*.avi
+*.mov
+
+# Ignorar outros tipos de arquivos grandes ou desnecessários
+*.log
+*.tmp
+
+# Ignorar diretórios de cache do Python
+__pycache__/
+*.pyc
+
+# Ignorar arquivos de dependências locais
+.Python
+pip-log.txt

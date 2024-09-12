@@ -1,0 +1,33 @@
+# Ignorar diretórios de upload e output (onde os vídeos são salvos)
+upload/
+output/
+
+# Ignorar arquivos temporários do sistema
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Ignorar arquivos do ambiente de desenvolvimento (se estiver usando PHPStorm, VSCode, etc.)
+.idea/
+.vscode/
+
+# Ignorar arquivos do sistema operacional
+.DS_Store      # macOS
+Thumbs.db      # Windows
+
+# Ignorar arquivos de backup
+*.bak
+*.old
+*.save
+
+# Ignorar diretórios de cache PHP
+cache/
+vendor/
+
+# Ignorar logs e sessões
+logs/
+sessions/
+
+# Ignorar arquivos de configuração de servidores locais
+.env
