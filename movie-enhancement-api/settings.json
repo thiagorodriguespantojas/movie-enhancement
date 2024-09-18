@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./venv/Lib/site-packages"
+    ],
+    "python.pythonPath": "c:/WORKSPACE/1. REPOPROJECT/movie-enhancement/movie-enhancement-api/venv/Scripts/python.exe"
+}
